@@ -1,4 +1,4 @@
-package com.elopez.spacexdata
+package com.elopez.spacexdata.model
 
 import com.google.gson.annotations.SerializedName
 

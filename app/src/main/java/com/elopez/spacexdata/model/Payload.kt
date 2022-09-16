@@ -1,4 +1,4 @@
-package com.elopez.spacexdata
+package com.elopez.spacexdata.model
 
 data class Payload(
     val cap_serial: String?,

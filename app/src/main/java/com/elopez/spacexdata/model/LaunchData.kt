@@ -1,3 +1,3 @@
-package com.elopez.spacexdata
+package com.elopez.spacexdata.model
 
 class LaunchData : ArrayList<LaunchDataItem>()

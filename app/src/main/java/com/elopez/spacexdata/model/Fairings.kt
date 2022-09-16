@@ -1,4 +1,4 @@
-package com.elopez.spacexdata
+package com.elopez.spacexdata.model
 
 data class Fairings(
     val recovered: Boolean?,
