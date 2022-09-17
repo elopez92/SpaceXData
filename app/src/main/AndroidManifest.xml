@@ -4,6 +4,7 @@
     package="com.elopez.spacexdata">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -18,7 +19,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.SpaceXData">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
