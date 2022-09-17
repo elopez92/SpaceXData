@@ -12,7 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 /*import coil.compose.AsyncImage
 import coil.request.ImageRequest*/
 import com.elopez.spacexdata.R
@@ -31,7 +33,7 @@ fun LaunchItem(
         modifier = modifier
             .fillMaxWidth()
             .border(border = BorderStroke(0.5.dp, Color.Gray)),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         /*AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -51,13 +53,18 @@ fun LaunchItem(
                     contentDescription = missionName,
                 modifier = Modifier
                     .height(90.dp)
-                    .width(90.dp),
+                    .width(90.dp)
+                    .padding(16.dp, 0.dp, 0.dp, 0.dp),
                 contentScale = ContentScale.Fit)
             }
         }
 
-        Column {
-            Text(missionName)
+        Column(
+            modifier = modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
+        ) {
+            Text(missionName,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp)
             Text(rocketName)
             Text(siteName)
             Text(launchDate)

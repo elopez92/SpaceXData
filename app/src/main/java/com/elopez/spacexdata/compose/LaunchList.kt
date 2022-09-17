@@ -1,5 +1,6 @@
 package com.elopez.spacexdata.compose
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -11,17 +12,21 @@ import com.elopez.spacexdata.model.LaunchData
 @Composable
 fun LaunchList(
     list: LaunchData,
+    loading: State<Boolean>,
     modifier: Modifier = Modifier
 ){
-    LazyColumn{
-        itemsIndexed(items = list){ _, item ->
-            LaunchItem(
-                missionName = item.mission_name,
-                rocketName = item.rocket.rocket_name,
-                siteName = item.launch_site.site_name,
-                launchDate = item.launch_date_utc,
-                imageString = item.links.mission_patch_small ?: ""
-            )
+    Box() {
+        LazyColumn {
+            itemsIndexed(items = list) { _, item ->
+                LaunchItem(
+                    missionName = item.mission_name,
+                    rocketName = item.rocket.rocket_name,
+                    siteName = item.launch_site.site_name,
+                    launchDate = item.launch_date_utc,
+                    imageString = item.links.mission_patch_small ?: ""
+                )
+            }
         }
+        CircularIndeterminateProgressBar(isDisplayed = loading)
     }
 }

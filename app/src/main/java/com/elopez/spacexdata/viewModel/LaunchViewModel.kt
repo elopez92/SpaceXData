@@ -19,13 +19,17 @@ class LaunchViewModel: ViewModel() {
     var launchListResponse: LaunchData by mutableStateOf(LaunchData())
     var errorMessage: String by mutableStateOf("")
 
+    val loading = mutableStateOf(false)
+
     val retService = RetrofitInstance.getRetrofitInstance().create(SpaceXService::class.java)
 
     fun getLaunchData(){
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
+            loading.value = true
             val response = retService.getAllLaunches()
             //emit(response)
             launchListResponse = response.body()!!
+            loading.value = false
         }
     }
 }

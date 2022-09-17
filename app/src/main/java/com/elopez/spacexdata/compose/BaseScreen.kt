@@ -17,9 +17,10 @@ import retrofit2.Response
 @Composable
 fun BaseScreen(
     launchList: LaunchData,
+    loading: State<Boolean>,
     modifier: Modifier = Modifier,
 ){
 
 
-    LaunchList(launchList)
+    LaunchList(launchList, loading)
 }
