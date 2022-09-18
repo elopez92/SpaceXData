@@ -1,5 +1,6 @@
 package com.elopez.spacexdata.compose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
@@ -9,12 +10,17 @@ import androidx.compose.material.Text
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.elopez.spacexdata.R
 import com.elopez.spacexdata.model.*
+import com.elopez.spacexdata.utils.loadPicture
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +40,7 @@ fun LaunchDetails(
         val formattedDate = sdf.format(date)
 
         val scrollState = rememberScrollState()
-        BoxWithConstraints(modifier = Modifier.fillMaxWidth()) {
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -46,6 +52,24 @@ fun LaunchDetails(
                         .fillMaxWidth()
                         .height(this@BoxWithConstraints.maxHeight)
                 ) {
+                    val image =
+                        launchData.links?.mission_patch?.let {
+                            loadPicture(
+                                url = it,
+                                defaultImage = R.drawable.ic_rocket_black
+                            ).value
+                        }
+                    image?.let{ img ->
+                        Image(
+                            bitmap = img.asImageBitmap(),
+                            contentDescription = launchData.details,
+                            modifier = Modifier
+                                .height(90.dp)
+                                .width(90.dp)
+                                .padding(16.dp, 0.dp, 0.dp, 0.dp),
+                            contentScale = ContentScale.Fit,
+                        )
+                    }
                     Column {
                         Row(
                             modifier = modifier.fillMaxWidth(),
@@ -73,10 +97,57 @@ fun LaunchDetails(
                             )
                             rocketInfo(rocket = it) }
 
-                        Text(
-                            fontWeight = FontWeight.Bold,
-                            text = "Ships: ${launchData.ships?.joinToString()}"
-                        )
+                        if(launchData.ships?.isNotEmpty() == true) {
+                            Text(
+                                text = "Ships: ${launchData.ships.joinToString()}"
+                            )
+                        }
+                        if(launchData.telemetry?.flight_club != null){
+                            Text(
+                                fontWeight = FontWeight.Bold,
+                                text = "Telemetry"
+                            )
+                            Text(
+                                text = "Flight Club: ${launchData.telemetry.flight_club}"
+                            )
+                        }
+
+                        if(launchData.launch_site != null){
+                            Text(
+                                fontWeight = FontWeight.Bold,
+                                text = "Launch Site"
+                            )
+                            Text(
+                                text = "Site id: ${launchData.launch_site.site_id}"
+                            )
+                            Text(
+                                text = "Site name: ${launchData.launch_site.site_name}"
+                            )
+                            Text(
+                                text = "Site name long: ${launchData.launch_site.site_name_long}"
+                            )
+                        }
+
+                        Text(text = "Launch success: ${launchData.launch_success}")
+
+                        if(launchData.launch_failure_details != null){
+                            Text(
+                                fontWeight = FontWeight.Bold,
+                                text = "Launch failure details"
+                            )
+                            Text(text = "Time: ${launchData.launch_failure_details.time}")
+                            if(launchData.launch_failure_details.altitude != null)
+                                Text(text = "Altitude: ${launchData.launch_failure_details.altitude}")
+                            Text(text = "Reason: ${launchData.launch_failure_details.reason}")
+                        }
+                        launchData.links?.let { linksDetails(links = it) }
+                        launchData.details?.let {Text(text = "Details: $it")}
+                        launchData.static_fire_date_utc?.let {Text(text = "Static fire data utc: $it")}
+                        launchData.static_fire_date_unix?.let {Text(text = "Static fire unix: $it")}
+                        launchData.timeline?.let{
+                            timelineDetails(timeline = launchData.timeline)
+                        }
+                        launchData.crew?.let { Text(text = "Crew: ${it.joinToString() }}") }
                     }
                 }
 
@@ -219,7 +290,7 @@ fun orbitParamsInfo(orbitParams: OrbitParams){
 fun fairing(fairings: Fairings){
     Column {
         Text(text = "Fairings",
-        fontStyle = FontStyle.Italic)
+        fontWeight = FontWeight.Bold)
         Text(text="Reused: ${fairings.reused}")
         Text(text="Recovery Attempt: ${fairings.recovery_attempt}")
         Text(text="Recovered: ${fairings.recovered}")
@@ -229,9 +300,43 @@ fun fairing(fairings: Fairings){
 }
 
 @Composable
-fun telemetryDetails(telemetry: Telemetry){
+fun linksDetails(links: Links){
     Column {
+        Text(text = "Links",
+        fontWeight = FontWeight.Bold)
+        if(links.mission_patch != null)
+            Text(text = "Mission patch: ${links.mission_patch}")
+        if(links.mission_patch_small != null)
+            Text(text = "Mission patch small: ${links.mission_patch_small}")
+        if(links.reddit_campaign != null)
+            Text(text = "Reddit campaign: ${links.reddit_campaign}")
+        if(links.reddit_launch != null)
+            Text(text = "Reddit launch: ${links.reddit_launch}")
+        if(links.reddit_recovery != null)
+            Text(text = "Reddit recovery: ${links.reddit_recovery}")
+        if(links.reddit_media != null)
+            Text(text = "Reddit media: ${links.reddit_media}")
+        if(links.presskit != null)
+            Text(text = "Presskit: ${links.presskit}")
+        if(links.article_link != null)
+            Text(text = "Article link: ${links.article_link}")
+        if(links.wikipedia != null)
+            Text(text = "Wikipedia: ${links.wikipedia}")
+        if(links.video_link != null)
+            Text(text = "Video link: ${links.video_link}")
+        if(links.youtube_id != null)
+            Text(text = "YouTube id: ${links.youtube_id}")
+        if(links.flickr_images.isNotEmpty()){
+            Text(text = "Flickr Images: ${links.flickr_images.joinToString()}")
+        }
+    }
+}
 
-
+@Composable
+fun timelineDetails(timeline: Timeline){
+    Column {
+        Text(text = "Timeline",
+        fontWeight = FontWeight.Bold)
+        timeline.webcast_liftoff?.let { Text(text = "Webcast liftoff: $it") }
     }
 }

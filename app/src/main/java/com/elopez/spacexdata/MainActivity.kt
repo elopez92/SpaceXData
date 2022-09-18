@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val launchViewModel by viewModels<LaunchViewModel>()
-        if(savedInstanceState == null)
+        if(savedInstanceState == null || launchViewModel.launchListResponse.isEmpty())
             launchViewModel.getLaunchData()
         setContent{
             Navigation(viewModel = launchViewModel)
