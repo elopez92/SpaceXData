@@ -1,7 +1,10 @@
 package com.elopez.spacexdata.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Timeline(
     val beco: Int?,
     val center_core_boostback: Int?,
@@ -52,4 +55,4 @@ data class Timeline(
     val stage_sep: Int?,
     val webcast_launch: Int?,
     val webcast_liftoff: Int?
-)
+): Parcelable

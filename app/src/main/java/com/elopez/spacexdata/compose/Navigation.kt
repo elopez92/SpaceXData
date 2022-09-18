@@ -1,7 +1,6 @@
 package com.elopez.spacexdata.compose
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -18,6 +17,7 @@ fun Navigation(viewModel: LaunchViewModel) {
     NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route) {
             BaseScreen(
+                viewModel = viewModel,
                 launchList = viewModel.launchListResponse,
                 loading = viewModel.loading,
                 navController

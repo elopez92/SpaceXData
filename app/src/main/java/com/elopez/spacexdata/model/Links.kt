@@ -1,5 +1,9 @@
 package com.elopez.spacexdata.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Links(
     val article_link: String?,
     val flickr_images: List<String>,
@@ -13,4 +17,4 @@ data class Links(
     val video_link: String?,
     val wikipedia: String?,
     val youtube_id: String?
-)
+): Parcelable

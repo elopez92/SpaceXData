@@ -1,5 +1,9 @@
 package com.elopez.spacexdata.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class OrbitParams(
     val apoapsis_km: Double?,
     val arg_of_pericenter: Double?,
@@ -16,4 +20,4 @@ data class OrbitParams(
     val reference_system: String?,
     val regime: String?,
     val semi_major_axis_km: Double?
-)
+): Parcelable

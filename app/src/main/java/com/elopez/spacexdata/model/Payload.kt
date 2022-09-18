@@ -1,5 +1,9 @@
 package com.elopez.spacexdata.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Payload(
     val cap_serial: String?,
     val cargo_manifest: String?,
@@ -18,4 +22,4 @@ data class Payload(
     val payload_type: String,
     val reused: Boolean,
     val uid: String?
-)
+): Parcelable

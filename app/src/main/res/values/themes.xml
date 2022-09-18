@@ -5,4 +5,13 @@
         <item name="android:statusBarColor">@color/blue</item>
     </style>
 
+    <style name="Theme.SpaceXData.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.SpaceXData.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.SpaceXData.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

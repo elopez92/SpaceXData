@@ -13,6 +13,7 @@ import com.elopez.spacexdata.model.LaunchData
 import com.elopez.spacexdata.model.LaunchDataItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class LaunchViewModel: ViewModel() {
@@ -20,16 +21,21 @@ class LaunchViewModel: ViewModel() {
     var errorMessage: String by mutableStateOf("")
 
     val loading = mutableStateOf(false)
+    val selectedLaunch = mutableStateOf(LaunchDataItem())
 
     val retService = RetrofitInstance.getRetrofitInstance().create(SpaceXService::class.java)
 
     fun getLaunchData(){
-        viewModelScope.launch {
-            loading.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main){
+                loading.value = true
+            }
             val response = retService.getAllLaunches()
             //emit(response)
             launchListResponse = response.body()!!
-            loading.value = false
+            withContext(Dispatchers.Main){
+                loading.value = false
+            }
         }
     }
 }

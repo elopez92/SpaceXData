@@ -1,5 +1,9 @@
 package com.elopez.spacexdata.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Core(
     val block: Int?,
     val core_serial: String?,
@@ -11,4 +15,4 @@ data class Core(
     val landing_vehicle: String?,
     val legs: Boolean?,
     val reused: Boolean?
-)
+): Parcelable

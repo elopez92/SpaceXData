@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -27,12 +28,14 @@ fun LaunchItem(
     rocketName: String,
     siteName: String,
     launchDate: String,
-    imageString: String?
+    imageString: String?,
+    onLaunchSelected: () -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .border(border = BorderStroke(0.5.dp, Color.Gray)),
+            .border(border = BorderStroke(0.5.dp, Color.Gray))
+            .clickable { onLaunchSelected() },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         /*AsyncImage(
