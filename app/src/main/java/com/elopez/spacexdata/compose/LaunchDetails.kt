@@ -44,13 +44,14 @@ fun LaunchDetails(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(scrollState)
             ) {
                 Column(
                     modifier = modifier
-                        .padding(16.dp)
+                        .padding(16.dp, 16.dp, 16.dp, 0.dp)
                         .fillMaxWidth()
-                        .height(this@BoxWithConstraints.maxHeight)
+                        .heightIn(0.dp, this@BoxWithConstraints.maxHeight)
+                        .scrollable(scrollState, Orientation.Vertical)
                 ) {
                     val image =
                         launchData.links?.mission_patch?.let {
@@ -182,7 +183,9 @@ fun rocketInfo(rocket: Rocket, modifier: Modifier = Modifier){
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Column(Modifier.weight(1f)) {
+            Column(Modifier.weight(1f)
+                .heightIn(min = 0.dp, max = 250.dp)
+                .scrollable(rememberScrollState(), Orientation.Vertical)) {
                 Text(text="First Stage",
                     fontWeight = FontWeight.Bold)
                 Text(
@@ -191,7 +194,10 @@ fun rocketInfo(rocket: Rocket, modifier: Modifier = Modifier){
                 )
                 CoresInfo(firstStage = rocket.first_stage)
             }
-            Column(Modifier.weight(1f)) {
+            Column(
+                Modifier
+                    .weight(1f)
+                    .fillMaxWidth()) {
                 secondStage(secondStage = rocket.second_stage)
             }
         }
@@ -231,11 +237,16 @@ fun CoresInfo(firstStage: FirstStage){
 @Composable
 fun secondStage(secondStage: SecondStage){
     Column(
-        modifier = Modifier.fillMaxWidth(),) {
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(min = 0.dp, max = 250.dp)
+            .scrollable(rememberScrollState(), Orientation.Vertical)) {
+
         Text(text="Second Stage",
         fontWeight = FontWeight.Bold)
         Text(text="Block: ${secondStage.block}")
         payloadInfo(secondStage.payloads)
+
     }
 }
 

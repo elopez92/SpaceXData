@@ -63,7 +63,8 @@ fun LaunchItem(
         }
 
         Column(
-            modifier = modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
+            modifier = modifier.padding(8.dp, 0.dp, 0.dp, 0.dp).
+                    fillMaxWidth()
         ) {
             Text(missionName,
             fontWeight = FontWeight.Bold,
